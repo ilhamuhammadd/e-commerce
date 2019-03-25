@@ -23,7 +23,29 @@ describe('Users', ()=> {
 describe('/Post user', ()=> {
     it('it should POST a user', () => {
         chai.request(app)
-            .post('/user/register')
+            .post('/user/signup')
+            .send({
+                email: 'ilhambojo@gmail.com',
+                password: 'rahasia'
+            })
+            .then(function(response){
+                console.log(response.body)
+                response.should.have.status(201)
+                response.body.should.be.an('object')
+                response.body.should.have.property('email')
+                response.body.should.have.property('password')
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    })
+})
+
+// Login
+describe('/Post login user', ()=> {
+    it('it should post a user', () => {
+        chai.request(app)
+            .post('/user/signin')
             .send({
                 email: 'ilhambojo@gmail.com',
                 password: 'rahasia'
@@ -70,7 +92,7 @@ describe('/Post Product', ()=> {
             .send({
                 name: 'Sepatu Converse',
                 price: 120000,
-                detail: 'Ukuran 40 , buatan indonesia bro!'
+                stock: 20
             })
             .then(function(response) {
                 productId = response.body._id
@@ -102,13 +124,9 @@ describe('/Get Product', ()=> {
 describe('/Delete a Product', ()=>{
     it('it should delete a Product', ()=> {
         chai.request(app)
-            .delete(`/product/delete/${productId}`)
+            .delete(`/products/${productId}`)
             .then(function(response){
-                // console.log(response)
-                // console.log(productId, '======> productId')
-                // console.log(response.body, 'ini delete product')
                 response.should.have.status(200)
-                // response.body.should.be.an('object')
             })
             .catch(err=>{
                 console.log(err)

@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <form v-on:submit.prevent="login" >
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
                                 <div class="col-md-6">
                                     <input v-model="email" type="text" id="email_address" class="form-control" name="email-address" required autofocus>
                                 </div>
@@ -47,8 +47,7 @@
 </template>
 
 <script>
-import fromlocal from '@/api/fromlocal.js';
-
+import axios from 'axios';
 export default {
     name: 'login',
     data() {
@@ -60,14 +59,16 @@ export default {
     },
     methods: {
         login() {
-            // console.log(this.email, this.password)
-            fromlocal
-                .post('/user/login', {email: this.email, password: this.password})
+            axios
+                .post('http://localhost:3000/user/signin', {
+                    email: this.email, password: this.password
+                })
                 .then(user=>{
                     console.log(user)
                     this.email = ''
                     this.password = ''
                     localStorage.setItem('token', user.data.token)
+                    this.$router.push('/user/products')
                 })
                 .catch(err=>{
                     console.log(err)
@@ -76,5 +77,3 @@ export default {
     }
 }
 </script>
-
-

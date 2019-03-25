@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/e-commerce', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost/db-ecommerce', {useNewUrlParser: true})
 
-const Schema = mongoose.Schema
+let Schema = mongoose.Schema
 
 let productSchema = new Schema({
     name: String,
+    imageUrl: String,
     price: Number,
-    detail: String
+    stock: Number
 })
 
 let Product = mongoose.model('products', productSchema)

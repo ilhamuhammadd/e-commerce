@@ -5,18 +5,18 @@
                 <div class="card">
                     <div class="card-header">Register</div>
                     <div class="card-body">
-                        <form>
+                        <form v-on:submit.prevent="register" >
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="email-address" required autofocus>
+                                    <input v-model="email" type="text" id="email_address" class="form-control" name="email-address" required autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                 <div class="col-md-6">
-                                    <input type="password" id="password" class="form-control" name="password" required>
+                                    <input v-model="password" type="password" id="password" class="form-control" name="password" required>
                                 </div>
                             </div>
 
@@ -31,8 +31,8 @@
                             </div>
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
+                                <button  type="submit" class="btn btn-primary">
+                                    Register Now
                                 </button>
                                 <a href="#" class="btn btn-link">
                                     Forgot Your Password?
@@ -46,3 +46,32 @@
     </div>
 </template>
 
+<script>
+import axios from 'axios';
+export default {
+    name: 'Register',
+    data() {
+        return {
+            email: '',
+            password: '',
+            token: ''
+        }
+    },
+    methods: {
+        register() {
+            axios
+                .post('http://localhost:3000/user/signup', {email: this.email, password: this.password})
+                .then(user=>{
+                    console.log(user)
+                    this.email = ''
+                    this.password = ''
+                    localStorage.setItem('token', user.data.token)
+                    this.$router.push('/user/login')
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+        }
+    }
+}
+</script>

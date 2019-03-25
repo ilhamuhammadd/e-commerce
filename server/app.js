@@ -1,19 +1,26 @@
 const express = require('express')
 const app = express()
-const routerUser = require('./routes/user')
-const routerProduct = require('./routes/product')
-const port = 3000
 const cors = require('cors')
+const routeradmin = require('./router/admin')
+const routeruser = require('./router/user')
+const port = 3000
 
-// Setting Body Parse
+// Setting Cors
 app.use(cors())
-app.use(express.urlencoded({extended: false}))
+
+// Setting Using Json
 app.use(express.json())
 
-// Setting Routes
-app.use('/user', routerUser )
-app.use('/product', routerProduct)
+// Setting Body Parser
+app.use(express.urlencoded({extended: false}))
 
+
+// Setting Routes
+app.use('/admin', routeradmin )
+
+app.use('/user', routeruser)
+
+// Listen port
 module.exports = app
 
 app.listen(port, ()=> console.log('run forest run', port))

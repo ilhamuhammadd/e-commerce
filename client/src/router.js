@@ -3,9 +3,10 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Register from './views/Register.vue';
 import Login from './views/Login.vue';
-import Products from './views/Products.vue';
-import ProductItem from './components/ProductItem.vue';
-import ShoppingCart from './views/ShoppingCart.vue';
+import Product from './views/Product';
+import Cart from './views/Cart';
+import HomeAdmin from './views/HomeAdmin.vue';
+import ProductAdmin from './views/ProductAdmin.vue';
 
 Vue.use(Router);
 
@@ -14,47 +15,47 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '*',
+      path: '/admin/home',
+      name: 'HomeAdmin',
+      component: HomeAdmin,
+    },
+    {
+      path: '/admin/products',
+      name: 'ProductAdmin',
+      component: ProductAdmin,
+    },
+    {
+      path: '/user/home',
       name: 'home',
       component: Home,
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
-    },
-    {
-      path: '/register',
+      path: '/user/register',
       name: 'register',
       component: Register,
     },
     {
-      path: '/login',
+      path: '/user/login',
       name: 'login',
       component: Login,
     },
     {
-      path: '/products',
-      name: 'products',
-      component: Products,
-    },
-    {
-      path: '/product/:id',
+      path: '/user/products',
       name: 'product',
-      component: ProductItem,
+      component: Product,
     },
     {
-      path: '/shoppingcart',
-      name: 'shoppingcart',
-      component: ShoppingCart,
-    }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-    // },
+      path: '/user/cart',
+      name: 'cart',
+      component: Cart,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+    },
   ],
 });
